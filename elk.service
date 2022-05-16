@@ -1,0 +1,12 @@
+[Unit]
+Description=ELK docker-compose
+BindsTo=docker.service
+After=docker.service
+[Service]
+Restart=on-failure
+RestartSec=10
+ExecStart=/usr/bin/docker-compose --env-file /opt/ELK/.env  -f /opt/ELK/docker-compose.yml up
+ExecStop=/usr/bin/docker-compose  -f /opt/ELK/docker-compose.yml down
+ExecStopPost=/usr/bin/docker-compose -f /opt/ELK/docker-compose.yml rm -fv
+[Install]
+WantedBy=multi-user.target
